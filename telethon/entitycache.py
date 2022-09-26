@@ -85,8 +85,7 @@ class EntityCache:
                 raise KeyError('Invalid key will not have entity') from None
 
         for cls in (types.PeerUser, types.PeerChat, types.PeerChannel):
-            result = self.__dict__.get(utils.get_peer_id(cls(item)))
-            if result:
+            if result := self.__dict__.get(utils.get_peer_id(cls(item))):
                 return result
 
         raise KeyError('No cached entity for the given key')
@@ -116,19 +115,19 @@ class EntityCache:
         dct = self.__dict__
         cid = update.CONSTRUCTOR_ID
         if cid in has_user_id and \
-                update.user_id not in dct:
+                    update.user_id not in dct:
             return False
 
         if cid in has_chat_id and \
-                utils.get_peer_id(types.PeerChat(update.chat_id)) not in dct:
+                    utils.get_peer_id(types.PeerChat(update.chat_id)) not in dct:
             return False
 
         if cid in has_channel_id and \
-                utils.get_peer_id(types.PeerChannel(update.channel_id)) not in dct:
+                    utils.get_peer_id(types.PeerChannel(update.channel_id)) not in dct:
             return False
 
         if cid in has_peer and \
-                utils.get_peer_id(update.peer) not in dct:
+                    utils.get_peer_id(update.peer) not in dct:
             return False
 
         if cid in has_message:

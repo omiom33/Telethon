@@ -169,12 +169,12 @@ class ChatAction(EventBuilder):
 
             self.new_photo = new_photo is not None
             self.photo = \
-                new_photo if isinstance(new_photo, types.Photo) else None
+                        new_photo if isinstance(new_photo, types.Photo) else None
 
             self._added_by = None
             self._kicked_by = None
             self.user_added = self.user_joined = self.user_left = \
-                self.user_kicked = self.unpin = False
+                        self.user_kicked = self.unpin = False
 
             if added_by is True:
                 self.user_joined = True
@@ -284,8 +284,7 @@ class ChatAction(EventBuilder):
             The user who added ``users``, if applicable (`None` otherwise).
             """
             if self._added_by and not isinstance(self._added_by, types.User):
-                aby = self._entities.get(utils.get_peer_id(self._added_by))
-                if aby:
+                if aby := self._entities.get(utils.get_peer_id(self._added_by)):
                     self._added_by = aby
 
             return self._added_by
@@ -305,8 +304,7 @@ class ChatAction(EventBuilder):
             The user who kicked ``users``, if applicable (`None` otherwise).
             """
             if self._kicked_by and not isinstance(self._kicked_by, types.User):
-                kby = self._entities.get(utils.get_peer_id(self._kicked_by))
-                if kby:
+                if kby := self._entities.get(utils.get_peer_id(self._kicked_by)):
                     self._kicked_by = kby
 
             return self._kicked_by
